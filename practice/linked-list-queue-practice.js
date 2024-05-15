@@ -34,30 +34,86 @@ class SinglyLinkedList {
         // Implement in O(n) and in O(1) time complexity
 
         // Your code here 
+        // O(n) method
+        let n;
+        if (!this.head) {
+            n = 0;
+            return n;
+        }
+        
+        let current = this.head;
+        n = 1;
+        while(current.next) {
+            current = current.next;
+            n++;
+        }
+        return n;
+
+        // O(1) method
+
     }
 
     sumOfNodes() {
         // Returns the sum of the values of all the nodes
 
         // Your code here 
+        let sum = 0;
+        let current = this.head;
+        
+        // empty list
+        if (!this.head) return sum;
+
+        // non-empty list
+        while(current) {
+            sum += current.value;
+            current = current.next;
+        }
+        return sum;
 
         // Write your hypothesis on the time complexity of this method here
+        // answer: O(n)
     }
 
     averageValue() {
         // Returns the average value of all the nodes
 
         // Your code here 
+        // empty list
+        if (!this.head) return null;
+
+        // non-empty list
+        let current = this.head;
+        let n = 0;
+        let sum = 0;
+        while(current) {
+            sum += current.value;
+            n++;
+            current = current.next;
+        }
+        return sum/n;
 
         // Write your hypothesis on the time complexity of this method here
+        // answer: O(n)
     }
 
     findNthNode(n) {
         // Returns the node at the nth index from the head
 
         // Your code here 
+        // empty list
+        if (!this.head || n > this.listLength()) return null;
+
+        // non-empty list
+        let count = 0;
+        let current = this.head;
+        while (count<n) {
+            current = current.next;
+            count++;
+        }
+        return current;
 
         // Write your hypothesis on the time complexity of this method here
+        // answer: O(n)
     }
 
     findMid() {
@@ -66,8 +122,19 @@ class SinglyLinkedList {
             // How do the implementation for singly and doubly vary if at all?
 
         // Your code here 
+        let mid;
+        if (this.listLength() % 2 === 0) mid = this.listLength()/ 2 - 1;
+        else mid = Math.floor(this.listLength()/ 2);
+        let current = this.head;
+        let n = 0;
+        while (n < mid) {
+            current = current.next;
+            n++;
+        }
+        return current;
 
         // Write your hypothesis on the time complexity of this method here
+        // answer: O(n);
     }
 
 
@@ -78,16 +145,41 @@ class SinglyLinkedList {
             // Does the time complexity change? How about space complexity?
 
         // Your code here 
+        let newList = new SinglyLinkedList();
+
+        let n = this.listLength()-1;
+
+        while(n>=0) {
+            newList.addToTail(this.findNthNode(n).value);
+            n--;
+        }
+        return newList;
 
         // Write your hypothesis on the time complexity of this method here
+        // answer: O(n)
     }
 
     reverseInPlace() {
         // Reverses the linked list in-place
 
         // Your code here 
+        let current = this.head;
+        let prev = null;
+        let next = null;
+        while(current) {
+            next = current.next
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+
+        this.head = prev;
+        return this;
+
+
 
         // Write your hypothesis on the time complexity of this method here
+        // answer: O(n)
     }
 
 }
@@ -128,6 +220,10 @@ class DoublyLinkedList {
             // How do the implementation for singly and doubly vary if at all?
 
         // Your code here 
+        // empty list
+        if (this.head === null) return null;
+
+        // non-empty list
         
         // Write your hypothesis on the time complexity of this method here
     }
@@ -155,4 +251,21 @@ module.exports = {
     SinglyLinkedList,
     DoublyLinkedNode,
     DoublyLinkedList
+}
+
+list = new SinglyLinkedList();
+list.addToTail(1);
+list.addToTail(2);
+list.addToTail(3);
+list.addToTail(4);
+list.addToTail(5);
+list.addToTail(6);
+
+list.reverseInPlace()
+// console.log(list.reverseInPlace());
+
+let cur = list.head;
+for (let i = 6; i >= 1; i--) {
+  console.log(cur.value)//.to.equal(i);
+  cur = cur.next;
 }
