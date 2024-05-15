@@ -213,6 +213,51 @@ class DoublyLinkedList {
 
         return this.head;
     }
+    // added this manually, listLength not included in the original code
+    listLength() {
+        // Returns the length of the list
+        // Implement in O(n) and in O(1) time complexity
+
+        // Your code here 
+        // O(n) method
+        let n;
+        if (!this.head) {
+            n = 0;
+            return n;
+        }
+        
+        let current = this.head;
+        n = 1;
+        while(current.next) {
+            current = current.next;
+            n++;
+        }
+        return n;
+
+        // O(1) method
+
+    }
+
+    // added this manually, listLength not included in the original code
+    findNthNode(n) {
+        // Returns the node at the nth index from the head
+
+        // Your code here 
+        // empty list
+        if (!this.head || n > this.listLength()) return null;
+
+        // non-empty list
+        let count = 0;
+        let current = this.head;
+        while (count<n) {
+            current = current.next;
+            count++;
+        }
+        return current;
+
+        // Write your hypothesis on the time complexity of this method here
+        // answer: O(n)
+    }
 
     findMid() {
         // Returns the middle node
@@ -224,22 +269,64 @@ class DoublyLinkedList {
         if (this.head === null) return null;
 
         // non-empty list
+        let head = this.head;
+        let tail = this.tail;
+
+        if (this.listLength() % 2 === 1) {
+            while (head !== tail) {
+                head=head.next;
+                tail=tail.prev;
+            }
+            return head;
+        }
+
+        while(head !== tail.prev) {
+            head=head.next;
+            tail=tail.prev
+        }
+        return head;
         
         // Write your hypothesis on the time complexity of this method here
+        // answer: O(n)
     }
 
     reverse() {
         // Returns a new reversed version of the linked list
 
         // Your code here 
+        let newList = new DoublyLinkedList();
+        let n = this.listLength() -1;
+
+        while(n>=0) {
+            newList.addToTail(this.findNthNode(n).value);
+            n--;
+        }
+        return newList;
+
+
 
         // Write your hypothesis on the time complexity of this method here
+        // answer: O(n);
     }
 
     reverseInPlace() {
         // Reverses the linked list in-place
 
         // Your code here 
+        let current = this.head;
+        let prev = null;
+        let next = null;
+
+
+        while(current) {
+            next = current.next;
+            current.prev = next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+        this.head = prev;
+        this.tail = this.findNthNode(this.listLength()-1);
 
         // Write your hypothesis on the time complexity of this method here
     }
