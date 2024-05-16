@@ -10,6 +10,7 @@ class SinglyLinkedNode {
 class SinglyLinkedList {
     constructor(head = null) {
         this.head = head;
+        // this.length = 0;
     }
 
     addToTail(val) {
@@ -26,6 +27,7 @@ class SinglyLinkedList {
         }
 
         curr.next = newNode;
+        // this.length++;
         return this.head;
     }
 
@@ -50,7 +52,7 @@ class SinglyLinkedList {
         return n;
 
         // O(1) method
-
+        // use line 13 and 30: add another property within the constructor
     }
 
     sumOfNodes() {
@@ -173,7 +175,8 @@ class SinglyLinkedList {
             current = next;
         }
 
-        this.head = prev;
+        this.head = prev; // this.head is NOT like array[0], the memory space will remain originally assgined untill mannually reassigned, the same goes for this.tail
+                          // pointer refers to pointing to the memory address
         return this;
 
 
